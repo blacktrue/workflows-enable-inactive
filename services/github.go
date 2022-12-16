@@ -15,17 +15,17 @@ type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-type GithubService struct {
+type Github struct {
 	client HTTPClient
 }
 
-func NewGithubService(client HTTPClient) GithubService {
-	return GithubService{
+func NewGithub(client HTTPClient) Github {
+	return Github{
 		client: client,
 	}
 }
 
-func (s GithubService) GetWorkflows(repository string, token string) ([]models.Workflow, error) {
+func (s Github) GetWorkflows(repository string, token string) ([]models.Workflow, error) {
 	url := fmt.Sprintf(settings.Cfg.WorkflowsURL, repository)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -51,7 +51,7 @@ func (s GithubService) GetWorkflows(repository string, token string) ([]models.W
 	return res.Workflows, nil
 }
 
-func (s GithubService) EnableWorkflow(workflowID int32, repository string, token string) (bool, error) {
+func (s Github) EnableWorkflow(workflowID int32, repository string, token string) (bool, error) {
 	url := fmt.Sprintf(settings.Cfg.EnableWorkflowURL, repository, workflowID)
 	req, err := http.NewRequest(http.MethodPut, url, nil)
 	if err != nil {

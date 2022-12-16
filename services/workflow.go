@@ -4,17 +4,17 @@ import (
 	"github.com/blacktrue/workflows-enable-inactive/models"
 )
 
-//go:generate mockgen -destination=./mocks/github_service_mock.go --build_flags=--mod=mod -package=mocks . GithubSrv
-type GithubSrv interface {
+//go:generate mockgen -destination=./mocks/github_service_mock.go --build_flags=--mod=mod -package=mocks . GithubService
+type GithubService interface {
 	GetWorkflows(repository string, token string) ([]models.Workflow, error)
 	EnableWorkflow(workflowID int32, repository string, token string) (bool, error)
 }
 
 type WorkflowsService struct {
-	github GithubSrv
+	github GithubService
 }
 
-func NewWorkflowService(service GithubSrv) WorkflowsService {
+func NewWorkflowService(service GithubService) WorkflowsService {
 	return WorkflowsService{
 		github: service,
 	}

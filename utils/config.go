@@ -2,9 +2,10 @@ package utils
 
 import (
 	"encoding/json"
-	"github.com/blacktrue/workflows-enable-inactive/models"
 	"io"
 	"os"
+
+	"github.com/blacktrue/workflows-enable-inactive/models"
 )
 
 func GetConfig(path string) (models.Config, error) {

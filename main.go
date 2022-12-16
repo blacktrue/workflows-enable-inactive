@@ -23,7 +23,7 @@ func hasError(repositories []models.ValidationResult) bool {
 
 func main() {
 	httpClient := &http.Client{}
-	githubService := services.NewGithubService(httpClient)
+	githubService := services.NewGithub(httpClient)
 	workflowsService := services.NewWorkflowService(githubService)
 	args := os.Args[1:]
 	if len(args) == 0 {

@@ -23,7 +23,7 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 			},
 		}
 		ctrl := gomock.NewController(t)
-		mockGithubSrv := mocks.NewMockGithubSrv(ctrl)
+		mockGithubSrv := mocks.NewMockGithubService(ctrl)
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return(workflows, nil).Times(1)
 
 		srv := NewWorkflowService(mockGithubSrv)
@@ -41,7 +41,7 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 		}
 
 		ctrl := gomock.NewController(t)
-		mockGithubSrv := mocks.NewMockGithubSrv(ctrl)
+		mockGithubSrv := mocks.NewMockGithubService(ctrl)
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return(workflows, nil).Times(1)
 		mockGithubSrv.EXPECT().EnableWorkflow(gomock.Any(), gomock.Any(), gomock.Any()).Return(true, nil).Times(1)
 
@@ -53,7 +53,7 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 
 	t.Run("API error", func(t *testing.T) {
 		ctrl := gomock.NewController(t)
-		mockGithubSrv := mocks.NewMockGithubSrv(ctrl)
+		mockGithubSrv := mocks.NewMockGithubService(ctrl)
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return([]models.Workflow{}, errors.New("fake error")).Times(1)
 		mockGithubSrv.EXPECT().EnableWorkflow(gomock.Any(), gomock.Any(), gomock.Any()).Return(true, nil).Times(0)
 

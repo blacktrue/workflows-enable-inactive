@@ -21,7 +21,7 @@ func TestGithubService_GetWorkflows(t *testing.T) {
 		mockClient := mocks.NewMockHTTPClient(ctrl)
 		mockClient.EXPECT().Do(gomock.Any()).Return(mockResponse, nil).Times(1)
 
-		srv := NewGithubService(mockClient)
+		srv := NewGithub(mockClient)
 		workflows, err := srv.GetWorkflows("owner/fake-repository", "fake-token")
 		assert.NoError(t, err)
 		assert.Len(t, workflows, 1)
@@ -37,7 +37,7 @@ func TestGithubService_GetWorkflows(t *testing.T) {
 		mockClient := mocks.NewMockHTTPClient(ctrl)
 		mockClient.EXPECT().Do(gomock.Any()).Return(mockResponse, nil).Times(1)
 
-		srv := NewGithubService(mockClient)
+		srv := NewGithub(mockClient)
 		workflows, err := srv.GetWorkflows("owner/fake-repository", "fake-token")
 		assert.Error(t, err)
 		assert.Len(t, workflows, 0)
@@ -55,7 +55,7 @@ func TestGithubService_EnableWorkflow(t *testing.T) {
 		mockClient := mocks.NewMockHTTPClient(ctrl)
 		mockClient.EXPECT().Do(gomock.Any()).Return(mockResponse, nil).Times(1)
 
-		srv := NewGithubService(mockClient)
+		srv := NewGithub(mockClient)
 		updated, err := srv.EnableWorkflow(12345, "owner/fake-repository", "fake-token")
 		assert.NoError(t, err)
 		assert.True(t, updated)
@@ -71,7 +71,7 @@ func TestGithubService_EnableWorkflow(t *testing.T) {
 		mockClient := mocks.NewMockHTTPClient(ctrl)
 		mockClient.EXPECT().Do(gomock.Any()).Return(mockResponse, nil).Times(1)
 
-		srv := NewGithubService(mockClient)
+		srv := NewGithub(mockClient)
 		updated, err := srv.EnableWorkflow(12345, "owner/fake-repository", "fake-token")
 		assert.Error(t, err)
 		assert.False(t, updated)
