@@ -24,7 +24,7 @@ func hasError(repositories []models.ValidationResult) bool {
 func main() {
 	httpClient := &http.Client{}
 	githubService := services.NewGithub(httpClient)
-	workflowsService := services.NewWorkflowService(githubService)
+	workflowsService := services.NewWorkflow(githubService)
 	args := os.Args[1:]
 	if len(args) == 0 {
 		fmt.Printf("The argument config path is required")

@@ -10,17 +10,17 @@ type GithubService interface {
 	EnableWorkflow(workflowID int32, repository string, token string) (bool, error)
 }
 
-type WorkflowsService struct {
+type Workflows struct {
 	github GithubService
 }
 
-func NewWorkflowService(service GithubService) WorkflowsService {
-	return WorkflowsService{
+func NewWorkflow(service GithubService) Workflows {
+	return Workflows{
 		github: service,
 	}
 }
 
-func (s WorkflowsService) CheckAndEnableWorkflows(cfg models.Config) ([]models.ValidationResult, error) {
+func (s Workflows) CheckAndEnableWorkflows(cfg models.Config) ([]models.ValidationResult, error) {
 	results := make([]models.ValidationResult, 0)
 	for _, repository := range cfg.Repositories {
 		workflows, err := s.github.GetWorkflows(repository, cfg.Token)

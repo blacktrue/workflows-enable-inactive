@@ -26,13 +26,13 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 		mockGithubSrv := mocks.NewMockGithubService(ctrl)
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return(workflows, nil).Times(1)
 
-		srv := NewWorkflowService(mockGithubSrv)
+		srv := NewWorkflow(mockGithubSrv)
 		validations, err := srv.CheckAndEnableWorkflows(cfgMock)
 		assert.NoError(t, err)
 		assert.Len(t, validations, 1)
 	})
 
-	t.Run("Workflow is disabled_inactivity", func(t *testing.T) {
+	t.Run("Workflows is disabled_inactivity", func(t *testing.T) {
 		workflows := []models.Workflow{
 			{
 				State: "disabled_inactivity",
@@ -45,7 +45,7 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return(workflows, nil).Times(1)
 		mockGithubSrv.EXPECT().EnableWorkflow(gomock.Any(), gomock.Any(), gomock.Any()).Return(true, nil).Times(1)
 
-		srv := NewWorkflowService(mockGithubSrv)
+		srv := NewWorkflow(mockGithubSrv)
 		validations, err := srv.CheckAndEnableWorkflows(cfgMock)
 		assert.NoError(t, err)
 		assert.Len(t, validations, 1)
@@ -57,7 +57,7 @@ func TestGithubService_CheckAndEnableWorkflows(t *testing.T) {
 		mockGithubSrv.EXPECT().GetWorkflows(gomock.Any(), gomock.Any()).Return([]models.Workflow{}, errors.New("fake error")).Times(1)
 		mockGithubSrv.EXPECT().EnableWorkflow(gomock.Any(), gomock.Any(), gomock.Any()).Return(true, nil).Times(0)
 
-		srv := NewWorkflowService(mockGithubSrv)
+		srv := NewWorkflow(mockGithubSrv)
 		validations, err := srv.CheckAndEnableWorkflows(cfgMock)
 		assert.NoError(t, err)
 		assert.Len(t, validations, 1)
