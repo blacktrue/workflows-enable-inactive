@@ -48,7 +48,7 @@ func TestGithubService_EnableWorkflow(t *testing.T) {
 	t.Run("Happy path", func(t *testing.T) {
 		mockResponse := &http.Response{
 			StatusCode: http.StatusNoContent,
-			Body:       nil,
+			Body:       io.NopCloser(bytes.NewBufferString("")),
 		}
 
 		ctrl := gomock.NewController(t)
