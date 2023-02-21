@@ -1,0 +1,18 @@
+build:
+  environment:
+    go: go1.19.2
+  nodes:
+    analysis:
+      project_setup:
+        override: true
+      tests:
+        override: [go-scrutinizer-run]
+    coverage:
+      tests:
+        override:
+          - command: go install github.com/axw/gocov/gocov@latest
+          - command: go install github.com/AlekSi/gocov-xml@latest
+          - command: go test ./... -coverprofile=cover.out
+            coverage:
+              file: 'cover.out'
+              format: 'go-cc'
